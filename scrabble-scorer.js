@@ -1,6 +1,7 @@
 // inspired by https://exercism.io/tracks/javascript/exercises/etl/solutions/91f99a3cca9548cebe5975d7ebca6a85
 
 const input = require("readline-sync");
+let userWord = '';
 
 const oldPointStructure = {
   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
@@ -38,13 +39,12 @@ function initialPrompt() {
    //console.log("Let's play some scrabble! Enter a word:");
    //Part A
    console.log("Let's play some scrabble!" +'\n')
-   let userWord = input.question('Please enter a word: ')
-  // let userWord = input.question("Let's play some scrabble!" +'\n' + "Please enter a word: ")
+   userWord = input.question('Please enter a word: ')
    //console.log(oldScrabbleScorer(userWord))
    //no need to return, just print to console
    //do we even need to do that?!
    //return oldScrabbleScorer(userWord);
-   //return userWord;
+
 };
 
 //let chosenUserWord = initialPrompt()
@@ -109,8 +109,8 @@ function scorerPrompt() {
   }
   let selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
   //console.log(selectedScoringAlgorithm);
-  console.log(scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(//how do I get the user word in here??????));
-  // console.log(`Score for ${chosenUserWord}: ${scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(initialPrompt)}`);
+  //console.log(scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord));
+  console.log(`Score for '${userWord}': ${scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord)}`);
   //return selectedScoringAlgorithm;
 }
 
