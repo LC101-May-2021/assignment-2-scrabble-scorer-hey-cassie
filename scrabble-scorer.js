@@ -14,7 +14,8 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
-	word = word.toUpperCase();
+	//word = word.toUpperCase();
+  word = word.toLowerCase();
 	let letterPoints = "";
  
 	for (let i = 0; i < word.length; i++) {
@@ -108,15 +109,28 @@ function scorerPrompt() {
     console.log(`${i} - ${scoringOptions.name}: ${scoringOptions.description}`)
   }
   let selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
-  //console.log(selectedScoringAlgorithm);
-  //console.log(scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord));
+
   console.log(`Score for '${userWord}': ${scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord)}`);
   //return selectedScoringAlgorithm;
 }
 
-function transform() {};
+function transform(oldStructureObj) {
+  //transforming old structure to new structure
+  let newStructureObj = {};
+  for (let score in oldPointStructure) {
+    //for key(score) in old structure, let letters now equal value(or letters array) below
+    let letters = oldStructureObj[score];
+    for (let i = 0; i < letters.length; i++) {
+      newStructureObj[letters[i].toLowerCase()] = Number(score);
+    }
+  }
+  return newStructureObj;
+};
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
+//console.log(newPointStructure);
+
+//console.log(`this is P: ${newPointStructure.p}`)
 
 function runProgram() {
    initialPrompt();
