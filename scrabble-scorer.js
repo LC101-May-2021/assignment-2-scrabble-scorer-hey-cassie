@@ -14,8 +14,7 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
-	//word = word.toUpperCase();
-  word = word.toLowerCase();
+	word = word.toUpperCase();
 	let letterPoints = "";
  
 	for (let i = 0; i < word.length; i++) {
@@ -42,13 +41,10 @@ function initialPrompt() {
    console.log("Let's play some scrabble!" +'\n')
    userWord = input.question('Please enter a word: ')
    //console.log(oldScrabbleScorer(userWord))
-   //no need to return, just print to console
-   //do we even need to do that?!
-   //return oldScrabbleScorer(userWord);
+   return userWord;
 
 };
 
-//let chosenUserWord = initialPrompt()
 //console.log(oldScrabbleScorer(userWord));
 
 function simpleScore(word) {
@@ -79,7 +75,14 @@ function vowelBonusScore(word) {
 //test here
 //console.log(vowelBonusScore('lemmy'));
 
-let scrabbleScore;
+function scrabbleScore(word, pointStructure) {
+  let score = 0;
+  for(let i = 0; i < word.length; i++) {
+    score = score + pointStructure[word[i].toLowerCase()];
+    //console.log(score);
+  }
+  return score;
+};
 
 const scoringAlgorithms = [
   {
@@ -95,24 +98,13 @@ const scoringAlgorithms = [
   {
     name: 'Scrabble',
     description: 'The traditional scoring algorithm.',
-    scorerFunction: oldScrabbleScorer
+    //scorerFunction: oldScrabbleScorer
+    scorerFunction: scrabbleScore
   }
 ];
 
 //check to see if we can access name and function, etc
-//console.log(scoringAlgorithms[2].scorerFunction('lemmy'))
-
-function scorerPrompt() {
-  console.log('Which scoring algorithm would you like to use?' + '\n');
-  for (let i = 0; i < scoringAlgorithms.length; i++) {
-    let scoringOptions = scoringAlgorithms[i];
-    console.log(`${i} - ${scoringOptions.name}: ${scoringOptions.description}`)
-  }
-  let selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
-
-  console.log(`Score for '${userWord}': ${scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord)}`);
-  //return selectedScoringAlgorithm;
-}
+//console.log(`JS: ${scoringAlgorithms[2].scorerFunction('JavaScript')}`);
 
 function transform(oldStructureObj) {
   //transforming old structure to new structure
@@ -129,8 +121,20 @@ function transform(oldStructureObj) {
 
 let newPointStructure = transform(oldPointStructure);
 //console.log(newPointStructure);
-
 //console.log(`this is P: ${newPointStructure.p}`)
+//console.log(scrabbleScore('JavaScript', newPointStructure));
+
+function scorerPrompt() {
+  console.log('Which scoring algorithm would you like to use?' + '\n');
+  for (let i = 0; i < scoringAlgorithms.length; i++) {
+    let scoringOptions = scoringAlgorithms[i];
+    console.log(`${i} - ${scoringOptions.name}: ${scoringOptions.description}`)
+  }
+  let selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
+
+  console.log(`Score for '${userWord}': ${scoringAlgorithms[selectedScoringAlgorithm].scorerFunction(userWord, newPointStructure)}`);
+  //return selectedScoringAlgorithm;
+}
 
 function runProgram() {
    initialPrompt();
