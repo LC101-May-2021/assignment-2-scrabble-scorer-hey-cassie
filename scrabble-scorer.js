@@ -39,7 +39,12 @@ function initialPrompt() {
    //console.log("Let's play some scrabble! Enter a word:");
    //Part A
    console.log("Let's play some scrabble!" +'\n')
-   userWord = input.question('Please enter a word: ')
+   let letters = /^[A-Za-z]+$/;
+   userWord = input.question('Please enter a word: ');
+
+   while (!userWord.match(letters)) {
+     userWord = input.question('Please enter a word: ');
+   }
    //console.log(oldScrabbleScorer(userWord))
    return userWord;
 
@@ -132,6 +137,9 @@ function scorerPrompt() {
   }
   let selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
 
+  while (isNaN(selectedScoringAlgorithm) || selectedScoringAlgorithm > 2 || selectedScoringAlgorithm < 0) {
+    selectedScoringAlgorithm = Number(input.question('Enter 0, 1, or 2: '));
+  }
   console.log(`Score for '${userWord}': ${scoringAlgorithms[selectedScoringAlgorithm].scoringFunction(userWord, newPointStructure)}`);
   //return selectedScoringAlgorithm;
 }
